@@ -1,0 +1,74 @@
+def analyze_stock(current_price, pe_ratio, debt_to_equity, roe, quick_ratio):
+  """
+  This function analyzes a stock based on various financial ratios and provides an estimated price and risk rating.
+
+  Args:
+      current_price (float): The current price of the stock.
+      pe_ratio (float): The price-to-earnings (PE) ratio of the company.
+      debt_to_equity (float): The debt-to-equity (DF) ratio of the company.
+      roe (float): The return on equity (ROE) of the company.
+      quick_ratio (float): The quick ratio of the company.
+
+  Returns:
+      tuple: A tuple containing the estimated price and risk rating (good or risky).
+  """
+
+  # Initialize estimated price change
+  estimated_price_change = 0
+
+  # Analyze PE ratio
+  if pe_ratio > 25:
+    estimated_price_change += 0.1  # 10% increase
+  elif pe_ratio >= 15:
+    estimated_price_change += 0.07  # 7% increase
+  else:
+    estimated_price_change += 0.01  # 1% increase
+
+  # Analyze debt-to-equity ratio
+  if debt_to_equity > 1:
+    estimated_price_change += 0.1  # 10% increase
+  elif debt_to_equity == 1:
+    estimated_price_change += 0.07  # 7% increase
+  else:
+    estimated_price_change += 0.01  # 1% increase
+
+  # Analyze ROE
+  if 15 <= roe < 20:
+    estimated_price_change += 0.1  # 10% increase
+  elif 20 <= roe < 30:
+    estimated_price_change += 0.07  # 7% increase
+  elif roe >= 30:
+    estimated_price_change += 0.02  # 2% increase
+
+  # Analyze quick ratio
+  if quick_ratio > 1:
+    estimated_price_change += 0.1  # 10% increase
+  elif quick_ratio == 1:
+    estimated_price_change += 0.06  # 6% increase
+  else:
+    estimated_price_change += 0.01  # 1% increase
+
+  # Calculate estimated price
+  estimated_price = current_price * (1 + estimated_price_change)
+
+  # Determine risk rating
+  if estimated_price_change > 0.1:
+    risk_rating = "Good"
+  else:
+    risk_rating = "Risky"
+
+  return estimated_price, risk_rating
+
+# Get user input
+current_price = float(input("Enter the current stock price: "))
+pe_ratio = float(input("Enter the PE ratio: "))
+debt_to_equity = float(input("Enter the debt-to-equity (DF) ratio: "))
+roe = float(input("Enter the return on equity (ROE): "))
+quick_ratio = float(input("Enter the quick ratio: "))
+
+# Analyze the stock
+estimated_price, risk_rating = analyze_stock(current_price, pe_ratio, debt_to_equity, roe, quick_ratio)
+
+# Print the results
+print("Estimated price:", estimated_price)
+print("Risk rating:", risk_rating)
